@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #050608;
+  }
+  body {
+    @apply bg-ink text-steel;
+  }
+  :focus-visible {
+    outline: 2px solid #3ea6ff;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-steel px-6 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-ink transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-silver/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-steel transition hover:border-electric hover:text-white disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.3em] text-electric;
+  }
+  .field {
+    @apply w-full rounded-lg border border-silver/30 bg-graphite px-4 py-3 text-white placeholder:text-silver/60 focus:border-electric focus:outline-none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 72%);
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 72%);
+}
+
+.text-chrome {
+  background: linear-gradient(180deg, #ffffff 10%, #8b929c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: page-enter 500ms ease-out both;
+}
