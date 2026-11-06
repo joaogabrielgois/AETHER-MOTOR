@@ -108,7 +108,7 @@ export default function Home() {
         </div>
 
         <div data-hero-car className="relative mx-auto mt-2 w-full max-w-6xl px-2">
-          <img src={campaignPhoto} alt="Conceito de cupê elétrico grafite em um túnel" fetchPriority="high" width={1774} height={887} className="block h-auto w-full rounded-xl" />
+          <img src={campaignPhoto} alt="Desenho conceitual de um hipercarro elétrico futurista azul" fetchPriority="high" width={1600} height={900} className="block h-auto w-full rounded-xl" />
         </div>
 
         <div className="relative mx-auto mt-2 flex w-full max-w-7xl flex-col gap-8 px-5 lg:flex-row lg:items-end lg:justify-between lg:px-8">

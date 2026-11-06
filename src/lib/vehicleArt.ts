@@ -32,8 +32,8 @@ const GROUND = 274;
 const shapes: Record<BodyType, Shape> = {
   sedan: {
     body:
-      'M84 262 C76 250 76 232 88 222 L104 214 C140 208 180 204 222 196 C268 150 336 118 424 112 C510 106 584 122 636 154 C668 174 706 192 748 200 C792 208 824 220 832 240 C836 252 834 260 828 264 Z',
-    glass: 'M240 192 C284 156 342 128 424 122 C496 117 552 130 594 156 L630 186 Z',
+      'M72 250 L88 218 L176 202 L244 188 L332 128 Q362 110 430 110 L508 112 Q552 116 596 146 L668 188 L798 206 L840 230 L844 252 L818 264 L90 264 Z',
+    glass: 'M266 186 L340 136 Q370 120 430 120 L506 122 Q548 126 582 150 L632 186 Z',
     pillars: ['M430 121 L434 188'],
     belt: 'M108 222 C200 214 300 207 430 204 C560 201 680 206 772 216',
     seams: ['M434 190 L430 258', 'M302 198 L296 258', 'M574 196 L584 258'],
@@ -48,8 +48,8 @@ const shapes: Record<BodyType, Shape> = {
   },
   suv: {
     body:
-      'M92 262 C84 250 82 218 90 186 C96 154 114 128 150 118 C200 104 280 100 350 100 L470 100 C540 102 596 118 632 144 L682 164 C752 168 806 186 828 224 C834 244 834 258 828 264 Z',
-    glass: 'M182 172 C186 140 206 120 258 112 L468 106 C530 108 580 122 608 144 L630 170 Z',
+      'M78 250 L86 178 L128 124 L178 104 L474 100 Q526 100 574 130 L650 174 L790 190 L840 218 L846 252 L820 264 L92 264 Z',
+    glass: 'M148 170 L190 114 L472 110 Q520 110 562 138 L608 170 Z',
     pillars: ['M262 111 L266 174', 'M398 106 L400 174'],
     belt: 'M108 192 C200 184 330 180 470 178 C580 176 690 176 774 192',
     seams: ['M400 176 L396 258', 'M266 176 L260 258', 'M598 178 L608 258'],
@@ -64,8 +64,8 @@ const shapes: Record<BodyType, Shape> = {
   },
   coupe: {
     body:
-      'M80 262 C72 250 74 236 88 226 L112 218 C158 212 212 204 270 190 C332 160 404 134 474 128 C534 124 584 134 624 154 L692 188 C764 198 808 210 828 228 C836 240 834 254 828 264 Z',
-    glass: 'M302 188 C348 162 406 142 470 136 C526 132 568 140 600 158 L636 186 Z',
+      'M66 250 L84 226 L196 206 L280 188 L374 136 Q406 120 466 120 L520 124 Q552 126 592 150 L650 184 L784 200 L840 222 L848 250 L816 264 L86 264 Z',
+    glass: 'M302 186 L384 142 Q412 130 466 130 L518 134 Q548 136 582 158 L620 184 Z',
     pillars: ['M440 138 L448 188'],
     belt: 'M104 226 C200 214 330 202 460 198 C580 194 690 202 776 214',
     seams: ['M448 190 L444 258', 'M590 194 L600 258'],
@@ -114,6 +114,8 @@ function wheel(cx: number, cy: number, r: number, rimRatio: number, u: string): 
   <circle cx="${cx}" cy="${cy}" r="${r}" fill="#0a0b0d"/>
   <circle cx="${cx}" cy="${cy}" r="${(r * 0.93).toFixed(1)}" fill="none" stroke="#1b1f25" stroke-width="1.5"/>
   <circle cx="${cx}" cy="${cy}" r="${rim.toFixed(1)}" fill="url(#rim-${u})"/>
+  <circle cx="${cx}" cy="${cy}" r="${(rim * 0.83).toFixed(1)}" fill="#18232d" stroke="#b9d7e7" stroke-width="1"/>
+  <path d="M${cx + rim * 0.5} ${cy - rim * 0.45} l5 3 v${rim * 0.7} l-5 3 Z" fill="#ef5f38"/>
   ${spokes}
   <circle cx="${cx}" cy="${cy}" r="${(r * 0.16).toFixed(1)}" fill="#0c1016" stroke="#3ea6ff" stroke-width="1.6"/>`;
 }
@@ -131,7 +133,7 @@ export function vehicleSvg(o: CarArtOptions): string {
   const top = mix(o.color, dark ? '#9fbfe0' : '#ffffff', finish === 'matte' ? 0.1 : dark ? 0.3 : 0.22);
   const mid = o.color;
   const bottom = mix(o.color, '#000000', 0.55);
-  const rimRatio = o.bigWheels ? 0.8 : 0.7;
+  const rimRatio = o.bigWheels ? 0.86 : 0.74;
   const glassA = o.panoramic ? '#2b5b82' : '#1e2c39';
   const glassB = o.panoramic ? '#0c2236' : '#05080c';
   const showReflection = o.reflection !== false;
@@ -143,7 +145,14 @@ export function vehicleSvg(o: CarArtOptions): string {
     <path d="${s.body}" fill="url(#sheen-${u})"/>
     <path d="${s.body}" fill="url(#shade-${u})"/>
     <path d="${s.body}" fill="none" stroke="${dark ? '#8fb8e8' : '#ffffff'}" stroke-opacity="${dark ? 0.4 : 0.14}" stroke-width="1.4"/>
-    <path d="M120 256 L790 256 L790 264 L120 264 Z" fill="#000" opacity="0.45"/>
+    <g clip-path="url(#clip-${u})">
+      <path d="M88 250 L154 250 L182 262 L746 262 L780 242 L844 236 L844 270 L78 270 Z" fill="#080d14"/>
+      <path d="M282 246 L590 232 L650 238 L612 252 L292 258 Z" fill="${bottom}" stroke="${top}" stroke-width="1"/>
+      <path d="M284 218 L346 214 L320 242 L282 248 Z" fill="#0a1722"/>
+      <path d="M296 222 L328 219 M292 229 L320 226 M289 236 L312 233" stroke="#718495" stroke-width="1.5"/>
+      <path d="M776 234 L832 238 L818 250 L788 248 Z" fill="#03070c"/>
+      <path d="M100 248 L158 248 M754 258 L818 252" stroke="#84d8ff" stroke-width="2"/>
+    </g>
     <path d="${s.belt}" fill="none" stroke="#fff" stroke-opacity="${finish === 'matte' ? 0.1 : 0.34}" stroke-width="1.6" stroke-linecap="round"/>
     <path d="${s.glass}" fill="url(#glass-${u})"/>
     <path d="${s.glass}" fill="url(#glassref-${u})"/>
