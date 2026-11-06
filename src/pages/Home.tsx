@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import VehicleSvg from '../components/VehicleSvg';
-import CarStage from '../components/CarStage';
+import campaignPhoto from './campaign.jpg';
 import Counter from '../components/Counter';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { DEMO_NOTICE, vehicles } from '../data/vehicles';
@@ -108,14 +108,7 @@ export default function Home() {
         </div>
 
         <div data-hero-car className="relative mx-auto mt-2 w-full max-w-6xl px-2">
-          <CarStage>
-            <VehicleSvg
-              body="coupe"
-              color="#1f5fd6"
-              finish="gloss"
-              title="Ilustração conceitual do Aether Nova GT"
-            />
-          </CarStage>
+          <img src={campaignPhoto} alt="Conceito de cupê elétrico grafite em um túnel" fetchPriority="high" width={1774} height={887} className="block h-auto w-full rounded-xl" />
         </div>
 
         <div className="relative mx-auto mt-2 flex w-full max-w-7xl flex-col gap-8 px-5 lg:flex-row lg:items-end lg:justify-between lg:px-8">
